@@ -1,18 +1,26 @@
 import { test, expect } from '@playwright/test';
 
-test('Sign-in button is enabled', async ({ page }) => {
-  await page.goto('https://fe-delivery.tallinn-learning.ee/');
-  await page.getByTestId('username-input').fill('username123');
-  await page.getByTestId('password-input').fill('password123');
-  await expect(page.getByTestId('signIn-button')).toBeEnabled();
+test('has title', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+
+  // Expect a title "to contain" a substring.
+  await expect(page).toHaveTitle(/Playwright/);
 });
 
-test('Authorization error pop-up is displayed', async ({ page }) => {
-  await page.goto('https://fe-delivery.tallinn-learning.ee/');
-  await page.getByTestId('username-input').fill('username123');
-  await page.getByTestId('password-input').fill('password123');
-  await page.getByTestId('signIn-button').click();
-  await expect(page.getByTestId('authorizationError-popup')).toBeVisible();
+test.only('get started link', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+
+  // Check GitHub icon is visible
+  await expect(page.getByRole('link', { name: 'GitHub repository' })).toBeVisible();
+
+  // Click the get started link.
+  await page.getByRole('link', { name: 'Get started' }).click();
+
+  // Expects page to have a heading with the name of Installation.
+  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
 });
+
+
+
 
 
